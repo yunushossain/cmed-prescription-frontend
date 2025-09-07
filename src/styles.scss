@@ -1,0 +1,8 @@
+:root{ --pri:#0a66c2; --err:#b00020; }
+*{ box-sizing: border-box; } body{ margin:0; font-family: Inter, system-ui, -apple-system, Arial; }
+.container{ max-width: 1100px; margin: 0 auto; padding: 12px; }
+button{ cursor:pointer; }
+a{ color: var(--pri); text-decoration: none; }
+table{ width:100%; border-collapse: collapse; }
+th, td{ border:1px solid #e5e7eb; padding:8px; }
+.err{ color: var(--err); font-size: 12px; }

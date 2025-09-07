@@ -1,0 +1,10 @@
+<h2>RxNav Interaction Demo</h2>
+<div class="toolbar">
+  <label>rxcui</label><input [(ngModel)]="rxcui" placeholder="e.g. 341248">
+  <button (click)="load()">Fetch</button>
+</div>
+<table *ngIf="rows.length">
+  <thead><tr><th>Drug</th><th>Severity</th><th>Description</th></tr></thead>
+  <tbody><tr *ngFor="let r of rows"><td>{{r.name}}</td><td>{{r.severity}}</td><td>{{r.description}}</td></tr></tbody>
+</table>
+<p *ngIf="msg">{{msg}}</p>

@@ -1,0 +1,11 @@
+<h2>Day-wise Prescription Count</h2>
+<div class="toolbar">
+  <label>Start</label><input type="date" [(ngModel)]="startDate">
+  <label>End</label><input type="date" [(ngModel)]="endDate">
+  <button (click)="load()">Load</button>
+</div>
+<canvas baseChart [data]="chartData" [type]="'line'"></canvas>
+<table *ngIf="data.length" style="margin-top:12px">
+  <thead><tr><th>Day</th><th>Count</th></tr></thead>
+  <tbody><tr *ngFor="let d of data"><td>{{d.day}}</td><td>{{d.count}}</td></tr></tbody>
+</table>

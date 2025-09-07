@@ -1,0 +1,17 @@
+<div class="nav">
+  <div class="container nav-inner">
+    <div class="left">
+      <a routerLink="/prescriptions">Prescriptions</a>
+      <a routerLink="/reports/day-count">Report</a>
+      <a routerLink="/rxnav">RxNav</a>
+    </div>
+    <div class="right">
+      <a *ngIf="!auth.isLoggedIn()" routerLink="/login">Login</a>
+      <button *ngIf="auth.isLoggedIn()" (click)="logout()">Logout</button>
+    </div>
+  </div>
+</div>
+
+<div class="container">
+  <router-outlet></router-outlet>
+</div>

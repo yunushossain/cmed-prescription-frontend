@@ -1,0 +1,29 @@
+<div class="card">
+  <h2>{{isEdit?'Edit':'Create'}} Prescription</h2>
+  <form [formGroup]="form" (ngSubmit)="submit()">
+    <label>Date</label><input type="date" formControlName="prescriptionDate">
+    <div class="err" *ngIf="submitted && form.controls.prescriptionDate.invalid">Required</div>
+
+    <label>Patient Name</label><input formControlName="patientName">
+    <div class="err" *ngIf="submitted && form.controls.patientName.invalid">Required</div>
+
+    <label>Age</label><input type="number" formControlName="patientAge">
+    <div class="err" *ngIf="submitted && form.controls.patientAge.invalid">0-120</div>
+
+    <label>Gender</label>
+    <select formControlName="patientGender">
+      <option value="">--select--</option>
+      <option>Male</option><option>Female</option><option>Other</option>
+    </select>
+    <div class="err" *ngIf="submitted && form.controls.patientGender.invalid">Required</div>
+
+    <label>Diagnosis</label><textarea formControlName="diagnosis"></textarea>
+    <label>Medicines</label><textarea formControlName="medicines"></textarea>
+
+    <label>Next Visit</label><input type="date" formControlName="nextVisitDate">
+
+    <button [disabled]="loading">{{isEdit?'Update':'Create'}}</button>
+    <button type="button" (click)="cancel()">Cancel</button>
+    <p class="err" *ngIf="msg">{{msg}}</p>
+  </form>
+</div>

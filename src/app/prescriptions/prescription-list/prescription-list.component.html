@@ -1,0 +1,30 @@
+<div class="toolbar">
+  <div>
+    <label>Start</label><input type="date" [(ngModel)]="startDate">
+    <label>End</label><input type="date" [(ngModel)]="endDate">
+    <button (click)="load()">Filter</button>
+  </div>
+  <div>
+    <button (click)="create()">+ New</button>
+  </div>
+</div>
+
+<table *ngIf="items.length">
+  <thead><tr><th>Date</th><th>Name</th><th>Age</th><th>Gender</th><th>Diagnosis</th><th>Medicines</th><th></th></tr></thead>
+  <tbody>
+    <tr *ngFor="let p of items">
+      <td>{{p.prescriptionDate}}</td>
+      <td>{{p.patientName}}</td>
+      <td>{{p.patientAge}}</td>
+      <td>{{p.patientGender}}</td>
+      <td>{{p.diagnosis}}</td>
+      <td>{{p.medicines}}</td>
+      <td>
+        <button (click)="edit(p.id!)">Edit</button>
+        <button class="danger" (click)="remove(p.id!)">Delete</button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+<p *ngIf="!items.length && loaded">No data</p>
+<p class="err" *ngIf="msg">{{msg}}</p>
