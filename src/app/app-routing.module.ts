@@ -14,11 +14,12 @@ const routes: Routes = [
   { path: 'prescriptions/create', canActivate: [AuthGuard], component: PrescriptionFormComponent },
   { path: 'prescriptions/:id/edit', canActivate: [AuthGuard], component: PrescriptionFormComponent },
   { path: 'reports/day-count', canActivate: [AuthGuard], component: ReportComponent },
+
+  // ✅ Assignment-এর RxNav পেজ
   { path: 'rxnav', canActivate: [AuthGuard], component: RxInteractionsComponent },
 
-  // ✅ ডিফল্ট: prescriptions (লগইন না থাকলে Guard -> /login)
-  { path: '', redirectTo: 'prescriptions', pathMatch: 'full' },
-  { path: '**', redirectTo: 'prescriptions' }
+  { path: '', redirectTo: 'login', pathMatch: 'full' },
+  { path: '**', redirectTo: 'login' }
 ];
 
 @NgModule({

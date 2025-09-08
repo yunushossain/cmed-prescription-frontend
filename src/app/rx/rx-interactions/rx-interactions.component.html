@@ -1,10 +1,24 @@
-<h2>RxNav Interaction Demo</h2>
-<div class="toolbar">
-  <label>rxcui</label><input [(ngModel)]="rxcui" placeholder="e.g. 341248">
-  <button (click)="load()">Fetch</button>
-</div>
-<table *ngIf="rows.length">
-  <thead><tr><th>Drug</th><th>Severity</th><th>Description</th></tr></thead>
-  <tbody><tr *ngFor="let r of rows"><td>{{r.name}}</td><td>{{r.severity}}</td><td>{{r.description}}</td></tr></tbody>
+<h2>RxNav Drug Interactions</h2>
+
+<form (ngSubmit)="fetch()" style="margin-bottom:16px">
+  <label>RXCUI</label>
+  <input [(ngModel)]="rxcui" name="rxcui" required />
+  <button type="submit" [disabled]="loading">Load</button>
+</form>
+
+<p *ngIf="error" style="color:#c00">{{error}}</p>
+<p *ngIf="loading">Loading...</p>
+
+<table *ngIf="!loading && rows.length" border="1" cellpadding="6" cellspacing="0">
+  <thead>
+    <tr><th>Drugs</th><th>Description</th></tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let r of rows">
+      <td>{{ r.drug }}</td>
+      <td>{{ r.description }}</td>
+    </tr>
+  </tbody>
 </table>
-<p *ngIf="msg">{{msg}}</p>
+
+<p *ngIf="!loading && !rows.length && !error">No data.</p>

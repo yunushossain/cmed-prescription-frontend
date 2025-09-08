@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
+import { RxService } from '../rx.service';
 
 @Component({
   selector: 'app-rx-interactions',
@@ -8,25 +8,46 @@ import { HttpClient } from '@angular/common/http';
 })
 export class RxInteractionsComponent {
   rxcui = '341248';
-  rows: {name:string; severity:string; description:string}[] = [];
-  msg='';
+  loading = false;
+  error = '';
+  rows: { drug: string; description: string }[] = [];
 
-  constructor(private http: HttpClient){}
+  constructor(private rx: RxService) {}
 
-  load(){
-    this.msg=''; this.rows=[];
-    const url = `https://rxnav.nlm.nih.gov/REST/interaction/interaction.json?rxcui=${this.rxcui}`;
-    this.http.get<any>(url).subscribe({
-      next: data => {
-        const pairs = data?.interactionTypeGroup?.[0]?.interactionType?.[0]?.interactionPair || [];
-        this.rows = pairs.map((p:any) => ({
-          name: p.interactionConcept?.map((c:any)=>c.sourceConceptItem?.name).join(' + ') || '',
-          severity: p.severity || '',
-          description: p.description || ''
-        }));
-        if (!this.rows.length) this.msg = 'No interactions found.';
+  fetch() {
+    if (!this.rxcui?.trim()) {
+      this.error = 'Please enter an RXCUI';
+      return;
+    }
+
+    this.loading = true; this.error = ''; this.rows = [];
+    this.rx.getInteractions(this.rxcui).subscribe({
+      next: (data) => {
+        try {
+          const groups = data?.interactionTypeGroup ?? [];
+          const rows: any[] = [];
+          for (const g of groups) {
+            for (const t of (g.interactionType ?? [])) {
+              for (const p of (t.interactionPair ?? [])) {
+                const drugNames = (p.interactionConcept ?? [])
+                  .map((c: any) => c?.minConceptItem?.name)
+                  .filter((x: any) => !!x)
+                  .join(' + ');
+                const desc = p?.description ?? '';
+                rows.push({ drug: drugNames, description: desc });
+              }
+            }
+          }
+          this.rows = rows;
+        } catch {
+          this.error = 'Unexpected response format';
+        }
+        this.loading = false;
       },
-      error: _ => this.msg = 'Failed to fetch RxNav data'
+      error: (err) => {
+        this.error = err?.error?.message || 'Failed to load interactions';
+        this.loading = false;
+      }
     });
   }
 }

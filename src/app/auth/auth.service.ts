@@ -2,10 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environment';
 
-export interface LoginPayload {
-  token: string;
-  username?: string;
-}
+export interface LoginPayload { token: string; username?: string; }
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
