@@ -8,25 +8,21 @@ import { ReportComponent } from './reports/report/report.component';
 import { RxInteractionsComponent } from './rx/rx-interactions/rx-interactions.component';
 
 const routes: Routes = [
-  // public
   { path: 'login', component: LoginComponent },
 
-  // protected (guard applies to these paths only)
   { path: 'prescriptions', canActivate: [AuthGuard], component: PrescriptionListComponent },
   { path: 'prescriptions/create', canActivate: [AuthGuard], component: PrescriptionFormComponent },
   { path: 'prescriptions/:id/edit', canActivate: [AuthGuard], component: PrescriptionFormComponent },
   { path: 'reports/day-count', canActivate: [AuthGuard], component: ReportComponent },
   { path: 'rxnav', canActivate: [AuthGuard], component: RxInteractionsComponent },
 
-  // default -> login
-  { path: '', redirectTo: 'login', pathMatch: 'full' },
-
-  // fallback
-  { path: '**', redirectTo: 'login' }
+  // ✅ ডিফল্ট: prescriptions (লগইন না থাকলে Guard -> /login)
+  { path: '', redirectTo: 'prescriptions', pathMatch: 'full' },
+  { path: '**', redirectTo: 'prescriptions' }
 ];
 
 @NgModule({
-  imports: [RouterModule.forRoot(routes, { useHash: true })], // useHash optional but helpful
+  imports: [RouterModule.forRoot(routes, { useHash: true })],
   exports: [RouterModule]
 })
 export class AppRoutingModule {}

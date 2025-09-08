@@ -1,11 +1,17 @@
 <div class="card">
   <h2>Login</h2>
+
   <form [formGroup]="form" (ngSubmit)="submit()">
     <label>Username</label>
-    <input formControlName="username">
+    <input formControlName="username" placeholder="Enter username" />
+
     <label>Password</label>
-    <input type="password" formControlName="password">
-    <button [disabled]="form.invalid || loading">Sign in</button>
-    <p class="err" *ngIf="error">{{error}}</p>
+    <input type="password" formControlName="password" placeholder="Enter password" />
+
+    <button [disabled]="form.invalid || loading">
+      {{ loading ? 'Signing in...' : 'Sign in' }}
+    </button>
+
+    <p class="err" *ngIf="error">{{ error }}</p>
   </form>
 </div>
